@@ -48,7 +48,7 @@ sudo apt-get install jq
    cd openrouter.ai
    ```
 
-2. **Make the script executable:**
+2. **Ensure the script is executable:**
    ```bash
    chmod +x ai.sh
    ```
@@ -92,12 +92,14 @@ alias ai='/path/to/your/openrouter.ai/ai.sh'
 
 1. **For Bash users** - Add to your `~/.bashrc` or `~/.bash_profile`:
    ```bash
+   cd /path/to/your/openrouter.ai
    echo "alias ai='$(pwd)/ai.sh'" >> ~/.bashrc
    source ~/.bashrc
    ```
 
 2. **For Zsh users** - Add to your `~/.zshrc`:
    ```bash
+   cd /path/to/your/openrouter.ai
    echo "alias ai='$(pwd)/ai.sh'" >> ~/.zshrc
    source ~/.zshrc
    ```
