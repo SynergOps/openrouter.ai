@@ -1,4 +1,8 @@
 #!/bin/bash
+# This script interacts with the OpenRouter API to ask questions using the Mistral AI model.
+# license: Apache-2.0
+# Usage: ./ai.sh <your question> 
+# Example: ./ai.sh What is the meaning of 42
 
 # Source the .env file to load environment variables
 if [ -f .env ]; then
