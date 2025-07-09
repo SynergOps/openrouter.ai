@@ -5,10 +5,16 @@ Simple terminal app to use OpenRouter.ai with your personal API keys. Ask questi
 ## Features
 
 - 🚀 Simple command-line interface
-- 🔑 Secure API key management with `.env` file
+- 🔑 Secure API key and model management with `.env` file
 - 🎯 Clean output (only the AI response, no JSON clutter)
 - 💬 Natural language queries
 - 🆓 Uses free Mistral model by default
+- ⚡ Stateless design - each query is independent (no conversation history)
+
+## Important Note
+
+This tool is designed for **single-question interactions**. Each time you run the script, it sends an independent query to the AI model without any memory of previous conversations. If you need multi-turn conversations with context retention, consider using the OpenRouter web interface or building a more advanced wrapper that maintains conversation history.
+
 
 ## Prerequisites
 
