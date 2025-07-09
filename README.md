@@ -19,8 +19,7 @@ Simple terminal app to use OpenRouter.ai with your personal API keys. Ask questi
 
 **Ubuntu/Debian:**
 ```bash
-sudo apt-get update
-sudo apt-get install jq
+sudo apt install jq
 ```
 
 **CentOS/RHEL/Fedora:**
