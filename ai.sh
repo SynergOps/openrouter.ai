@@ -7,6 +7,23 @@
 # Get the directory where this script is located
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# Check if required binaries are installed
+if ! command -v curl &> /dev/null; then
+    echo "Error: curl is not installed. Please install curl first."
+    echo "Ubuntu/Debian: sudo apt-get install curl"
+    echo "CentOS/RHEL: sudo yum install curl"
+    echo "macOS: curl is usually pre-installed, or use 'brew install curl'"
+    exit 1
+fi
+
+if ! command -v jq &> /dev/null; then
+    echo "Error: jq is not installed. Please install jq first."
+    echo "Ubuntu/Debian: sudo apt-get install jq"
+    echo "CentOS/RHEL: sudo yum install jq"
+    echo "macOS: brew install jq"
+    exit 1
+fi
+
 # Source the .env file from the script's directory
 if [ -f "$SCRIPT_DIR/.env" ]; then
     source "$SCRIPT_DIR/.env"
