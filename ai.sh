@@ -4,11 +4,14 @@
 # Usage: ./ai.sh <your question> 
 # Example: ./ai.sh What is the meaning of 42
 
-# Source the .env file to load environment variables
-if [ -f .env ]; then
-    source .env
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Source the .env file from the script's directory
+if [ -f "$SCRIPT_DIR/.env" ]; then
+    source "$SCRIPT_DIR/.env"
 else
-    echo "Error: .env file not found. Please create a .env file with your OPENROUTER_API_KEY."
+    echo "Error: .env file not found in $SCRIPT_DIR. Please create a .env file with your OPENROUTER_API_KEY."
     exit 1
 fi
 

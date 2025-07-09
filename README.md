@@ -79,6 +79,49 @@ sudo apt-get install jq
 ./ai.sh your question here
 ```
 
+### Creating a Terminal Alias (Recommended)
+
+For easier access, you can create an alias so you can use the script from anywhere without typing the full path:
+
+**Option 1: Temporary alias (current session only)**
+```bash
+alias ai='/path/to/your/openrouter.ai/ai.sh'
+```
+
+**Option 2: Permanent alias (recommended)**
+
+1. **For Bash users** - Add to your `~/.bashrc` or `~/.bash_profile`:
+   ```bash
+   echo "alias ai='$(pwd)/ai.sh'" >> ~/.bashrc
+   source ~/.bashrc
+   ```
+
+2. **For Zsh users** - Add to your `~/.zshrc`:
+   ```bash
+   echo "alias ai='$(pwd)/ai.sh'" >> ~/.zshrc
+   source ~/.zshrc
+   ```
+
+3. **Manual method** - Edit your shell config file:
+   ```bash
+   # Open your shell config file
+   nano ~/.bashrc  # or ~/.zshrc for Zsh users
+   
+   # Add this line (replace with your actual path):
+   alias ai='/full/path/to/openrouter.ai/ai.sh'
+   
+   # Reload your shell config
+   source ~/.bashrc  # or source ~/.zshrc
+   ```
+
+**After setting up the alias, you can use it from anywhere:**
+```bash
+# Instead of ./ai.sh question
+# Works from any directory
+cd ~/Documents
+ai explain machine learning
+```
+
 ### Examples
 
 ```bash
