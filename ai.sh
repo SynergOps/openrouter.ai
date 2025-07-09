@@ -39,6 +39,11 @@ if [ -z "$OPENROUTER_API_KEY" ]; then
     exit 1
 fi
 
+# Set default model if not specified in .env
+if [ -z "$OPENROUTER_MODEL" ]; then
+    OPENROUTER_MODEL="mistralai/mistral-small-3.2-24b-instruct:free"
+fi
+
 # Check if user provided a question
 if [ $# -eq 0 ]; then
     echo "Usage: $0 <your question>"
@@ -54,7 +59,7 @@ RESPONSE=$(curl -s https://openrouter.ai/api/v1/chat/completions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $OPENROUTER_API_KEY" \
   -d "{
-  \"model\": \"mistralai/mistral-small-3.2-24b-instruct:free\",
+  \"model\": \"$OPENROUTER_MODEL\",
   \"messages\": [
     {
       \"role\": \"user\",
