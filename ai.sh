@@ -26,6 +26,7 @@ fi
 
 # Source the .env file from the script's directory
 if [ -f "$SCRIPT_DIR/.env" ]; then
+    # shellcheck disable=SC1091
     source "$SCRIPT_DIR/.env"
 else
     echo "Error: .env file not found in $SCRIPT_DIR. Please create a .env file with your OPENROUTER_API_KEY."
