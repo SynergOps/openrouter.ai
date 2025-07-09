@@ -21,12 +21,12 @@ jobs:
         uses: reviewdog/action-shellcheck@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          reporter: github-check # Change reporter.
-          #path: "." 
-          pattern: "*.sh" # Only check .sh files
-          exclude: "./.git/*" # Optional.
-          shellcheck_flags: --external-sources --severity=warning
-          level: warning
+          reporter: github-check
+          pattern: "*.sh"
+          exclude: "./.git/*"
+          shellcheck_flags: --external-sources --severity=info
+          level: info
+          fail_on_error: true
 
   shellcheck_pr:
     if: github.event_name == 'pull_request'
