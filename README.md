@@ -36,7 +36,7 @@ brew install jq
 
 **Windows (WSL):**
 ```bash
-sudo apt-get install jq
+sudo apt install jq
 ```
 
 ## Installation
@@ -59,15 +59,17 @@ sudo apt-get install jq
    - Click API keys section
    - Generate a new API key
 
-4. **Configure your API key:**
-   - Copy the `.env` file template and add your API key:
+4. **Configure your API key and model:**
+   - while you are in the openrouter folder, edit the `.env` file template and add your API key:
    ```bash
-   # Edit the .env file
-   nano .env
+   vim .env
    ```
-   - Replace `your_api_key_here` with your actual API key:
+   - Add your API key and optionally configure the model:
    ```
+   # OpenRouter API Configuration
    OPENROUTER_API_KEY=sk-or-v1-your-actual-api-key-here
+   # OpenRouter Model Configuration (optional - leave empty for default)
+   OPENROUTER_MODEL=
    ```
 
 ## Usage
@@ -77,8 +79,30 @@ sudo apt-get install jq
 ```bash
 ./ai.sh your question here
 ```
+### Examples
 
-### Creating a Terminal Alias (Recommended)
+```bash
+# Ask a simple question
+./ai.sh what is the meaning of life
+
+# Ask for coding help
+./ai.sh how do I create a function in Python
+
+# Ask for a definition
+./ai.sh define recursion
+
+# Ask for a summary
+./ai.sh summarize the plot of "The Hitchhiker's Guide to the Galaxy"
+```
+
+### Sample Output
+
+```bash
+$ ./ai.sh what is the meaning of 42
+The number 42 is famously known as "The Answer to the Ultimate Question of Life, the Universe, and Everything" from Douglas Adams' science fiction series "The Hitchhiker's Guide to the Galaxy."
+```
+
+## Creating a Terminal Alias (Recommended)
 
 For easier access, you can create an alias so you can use the script from anywhere without typing the full path:
 
@@ -123,43 +147,27 @@ cd ~/Documents
 ai explain machine learning
 ```
 
-### Examples
-
-```bash
-# Ask a simple question
-./ai.sh what is the meaning of life
-
-# Ask for coding help
-./ai.sh how do I create a function in Python
-
-# Ask for a definition
-./ai.sh define recursion
-
-# Ask for a summary
-./ai.sh summarize the plot of "The Hitchhiker's Guide to the Galaxy"
-```
-
-### Sample Output
-
-```bash
-$ ./ai.sh what is the meaning of 42
-The number 42 is famously known as "The Answer to the Ultimate Question of Life, the Universe, and Everything" from Douglas Adams' science fiction series "The Hitchhiker's Guide to the Galaxy."
-```
-
 ## Configuration
 
 ### Changing the AI Model
 
-You can modify the `ai.sh` script to use different models available on OpenRouter. Edit the `model` field in the script:
+You can change the AI model by editing the `OPENROUTER_MODEL` variable in your `.env` file:
 
-```json
-"model": "mistralai/mistral-small-3.2-24b-instruct:free"
+```bash
+# Leave empty or unset to use the default model
+OPENROUTER_MODEL=
+
+# Or specify a different model
+OPENROUTER_MODEL=qwen/qwq-32b:free
 ```
 
 Popular free models on OpenRouter include:
+- `mistralai/mistral-small-3.2-24b-instruct:free` (default)
 - `qwen/qwq-32b:free`
 - `deepseek/deepseek-r1-0528:free`
 - `google/gemini-2.0-flash-exp:free`
+
+**Note:** If `OPENROUTER_MODEL` is not set or left empty, the script will use the default Mistral model.
 
 ### Common Issues
 
@@ -174,14 +182,25 @@ Popular free models on OpenRouter include:
    - Verify your `.env` file contains: `OPENROUTER_API_KEY=your-actual-key`
    - Make sure there are no extra spaces around the `=` sign
 
-4. **Empty or error responses**
+4. **Empty, Invalid model, or other errors**
+   - Check that your `OPENROUTER_MODEL` setting in `.env` is correct
+   - Verify the model name is available on OpenRouter
+   - Leave `OPENROUTER_MODEL=` empty to use the default model
+
+5. **Empty or error responses**
+   - Carefully read the message response and act accordingly
    - Verify your API key is valid and active
    - Check your internet connection
    - Ensure you haven't exceeded any rate limits
 
 ### Debug Mode
 
-To see the full JSON response (useful for debugging), temporarily remove the `| jq -r '.choices[0].message.content'` part from the curl command in `ai.sh`.
+The script automatically shows the full JSON response when it encounters errors or unexpected responses. If you need to see the raw API response for debugging purposes, the script will display it when:
+- The API returns an error
+- The response format is unexpected
+- The content cannot be extracted properly
+
+This provides all the debugging information you need without manually modifying the script.
 
 ## License
 
