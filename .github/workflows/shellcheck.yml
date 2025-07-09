@@ -1,43 +1,47 @@
 # Workflow https://github.com/marketplace/actions/run-shellcheck-with-reviewdog
 
-name: Review Dog
+name: ShellCheck Review
 
 on:
   push: 
+    branches: [ main, master ]
   pull_request:
+    branches: [ main, master ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
   shellcheck:
+    name: ShellCheck
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-      - name: shellcheck github-check
+        uses: actions/checkout@v4
+      - name: Run ShellCheck
         uses: reviewdog/action-shellcheck@v1
         with:
-          github_token: ${{ secrets.github_token }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-check # Change reporter.
-          #path: "shelldio"
-          #pattern: "*.sh" # Optional.
+          #path: "." 
+          pattern: "*.sh" # Only check .sh files
           exclude: "./.git/*" # Optional.
-          shellcheck_flags: --external-sources
-          #level: info
-          #shellcheck_flags: --severity=style  
+          shellcheck_flags: --external-sources --severity=warning
+          level: warning
+
   shellcheck_pr:
-    #if: github.event_name == 'pull_request'
-    name: shellcheck pull request
+    if: github.event_name == 'pull_request'
+    name: ShellCheck PR Review
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-      - name: shellcheck github-pr-review
+        uses: actions/checkout@v4
+      - name: Run ShellCheck with PR comments
         uses: reviewdog/action-shellcheck@v1
         with:
-          github_token: ${{ secrets.github_token }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review 
-          #path: "shelldio"
-          #pattern: "*.sh" # Optional.
+          #path: "."
+          pattern: "*.sh" # Only check .sh files
           exclude: "./.git/*" # Optional.
-          shellcheck_flags: --external-sources
+          shellcheck_flags: --external-sources --severity=warning
+          level: warning
