@@ -49,7 +49,7 @@ fi
 QUESTION="$*"
 
 # Make the API call with the user's question and extract only the content
-curl -s https://openrouter.ai/api/v1/chat/completions \
+RESPONSE=$(curl -s https://openrouter.ai/api/v1/chat/completions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $OPENROUTER_API_KEY" \
   -d "{
@@ -65,4 +65,21 @@ curl -s https://openrouter.ai/api/v1/chat/completions \
       ]
     }
   ]
-}" | jq -r '.choices[0].message.content'
+}")
+
+# Check if we got a valid response
+if [ -z "$RESPONSE" ]; then
+    echo "Error: No response from API. Check your internet connection."
+    exit 1
+fi
+
+# Try to extract the content, but show full response if it fails
+CONTENT=$(echo "$RESPONSE" | jq -r '.choices[0].message.content' 2>/dev/null)
+
+if [ "$CONTENT" = "null" ] || [ -z "$CONTENT" ]; then
+    echo "Error: Unexpected API response. Full response:"
+    echo "$RESPONSE" | jq . 2>/dev/null || echo "$RESPONSE"
+    exit 1
+else
+    echo "$CONTENT"
+fi
