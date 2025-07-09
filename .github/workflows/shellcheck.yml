@@ -26,7 +26,8 @@ jobs:
           exclude: "./.git/*"
           shellcheck_flags: --external-sources --severity=info
           level: info
-          fail_level: warning
+          fail_level: error
+          filter_mode: nofilter
 
   shellcheck_pr:
     if: github.event_name == 'pull_request'
