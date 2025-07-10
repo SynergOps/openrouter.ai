@@ -49,7 +49,7 @@ sudo apt install jq
 
 1. **Clone or download this repository:**
    ```bash
-   git clone https://github.com/yourusername/openrouter.ai.git
+   git clone https://github.com/SynergOps/openrouter.ai
    cd openrouter.ai
    ```
 
