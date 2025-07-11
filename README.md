@@ -157,23 +157,29 @@ ai explain machine learning
 
 ### Changing the AI Model
 
-You can change the AI model by editing the `OPENROUTER_MODEL` variable in your `.env` file:
+You can change the AI model by editing the `OPENROUTER_MODEL` variable in your `.env` file. The `.env` file now includes a comprehensive list of free models - simply uncomment the one you want to use:
 
 ```bash
 # Leave empty or unset to use the default model
 OPENROUTER_MODEL=
 
-# Or specify a different model
-OPENROUTER_MODEL=qwen/qwq-32b:free
+# Or uncomment one of the many free models listed in .env
+# OPENROUTER_MODEL=qwen/qwq-32b:free
+# OPENROUTER_MODEL=deepseek/deepseek-r1-0528:free
+# OPENROUTER_MODEL=google/gemini-2.0-flash-exp:free
 ```
 
-Popular free models on OpenRouter include:
+The `.env` file includes many free models on OpenRouter, including:
 - `mistralai/mistral-small-3.2-24b-instruct:free` (default)
 - `qwen/qwq-32b:free`
 - `deepseek/deepseek-r1-0528:free`
 - `google/gemini-2.0-flash-exp:free`
+- `meta-llama/llama-3.1-8b-instruct:free`
+- `meta-llama/llama-3.1-70b-instruct:free`
+- `microsoft/wizardlm-2-8x22b:free`
+- And many more! Check your `.env` file for the complete list.
 
-**Note:** If `OPENROUTER_MODEL` is not set or left empty, the script will use the default Mistral model.
+**Note:** If `OPENROUTER_MODEL` is not set or left empty, the script will use the default Mistral model. Simply uncomment one of the free models in your `.env` file to use a different model.
 
 ### Common Issues
 
