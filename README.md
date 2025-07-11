@@ -1,6 +1,8 @@
 # openrouter.ai in Terminal
 
-Simple terminal app to use OpenRouter.ai with your personal API keys. Ask questions directly from your terminal and get AI responses instantly.
+Simple terminal app to use OpenRouter.ai with your personal API keys. Ask questions directly from your terminal and get AI responses instantly. 
+
+Please note that free models on openrouter.ai (those with :free in their slug) are typically limited to 50 requests per day if you have not purchased credits. A request on OpenRouter.ai is defined as a single API call or message sent to the model—essentially, each question or prompt you send, regardless of its length or the number of tokens involved. For 99% of people using this script, is more that enough. These limits apply per account, not per model. Switching between free models does not reset your daily quota. Please read their documentation for more: https://openrouter.ai/settings/credits
 
 ## Features
 
@@ -11,7 +13,7 @@ Simple terminal app to use OpenRouter.ai with your personal API keys. Ask questi
 - 🆓 Uses free Mistral model by default
 - ⚡ Stateless design - each query is independent (no conversation history)
 
-## Important Note
+### Important Note
 
 This tool is designed for **single-question interactions**. Each time you run the script, it sends an independent query to the AI model without any memory of previous conversations. If you need multi-turn conversations with context retention, consider using the OpenRouter web interface or building a more advanced wrapper that maintains conversation history.
 
