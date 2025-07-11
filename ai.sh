@@ -11,6 +11,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 if ! command -v curl &> /dev/null; then
     echo "Error: curl is not installed. Please install curl first."
     echo "Ubuntu/Debian: sudo apt install curl"
+    echo "Arch-based: sudo pacman -S curl"
+    echo "Fedora/RHEL: sudo dnf install curl"
     echo "CentOS/RHEL: sudo yum install curl"
     echo "macOS: curl is usually pre-installed, or use 'brew install curl'"
     exit 1
@@ -18,6 +20,8 @@ fi
 
 if ! command -v jq &> /dev/null; then
     echo "Error: jq is not installed. Please install jq first."
+    echo "Arch-based: sudo pacman -S jq"
+    echo "Fedora/RHEL: sudo dnf install jq"
     echo "Ubuntu/Debian: sudo apt install jq"
     echo "CentOS/RHEL: sudo yum install jq"
     echo "macOS: brew install jq"
