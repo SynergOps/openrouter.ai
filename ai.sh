@@ -91,5 +91,30 @@ if [ "$CONTENT" = "null" ] || [ -z "$CONTENT" ]; then
     echo "$RESPONSE" | jq . 2>/dev/null || echo "$RESPONSE"
     exit 1
 else
-    echo "$CONTENT"
+    GREEN="\033[1;32m"
+    RESET="\033[0m"
+
+    echo -e "\n${GREEN}🤖 AI response:${RESET}\n"
+    echo "$CONTENT" | fold -s -w 100
+    echo
 fi
+
+# Save session to .txt file
+TXT_DIR="$SCRIPT_DIR/chat_sessions"
+mkdir -p "$TXT_DIR"
+
+TXT_TITLE=$(echo "$QUESTION" | sed 's/\..*//' | cut -c1-100 | tr -cd '[:alnum:] _-' | tr ' ' '_')
+TXT_FILE="$TXT_DIR/${TXT_TITLE}.txt"
+DATE_STR=$(date '+%Y-%m-%d %H:%M')
+
+{
+  echo "📅 $DATE_STR"
+  echo
+  echo "🗨️ Question:"
+  echo "$QUESTION"
+  echo
+  echo "🤖 AI response:"
+  echo "$CONTENT" | fold -s -w 100
+  echo
+  printf '=%.0s' {1..100}; echo
+} >> "$TXT_FILE"
