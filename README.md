@@ -37,6 +37,11 @@ sudo yum install jq
 sudo dnf install jq
 ```
 
+**Arch-based:**
+```bash
+sudo pacman -S jq
+```
+
 **macOS:**
 ```bash
 brew install jq
