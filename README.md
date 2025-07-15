@@ -101,13 +101,19 @@ sudo apt install jq
 
 # Ask for a summary
 ./ai.sh summarize the plot of "The Hitchhiker's Guide to the Galaxy"
+
+# Note for zsh users: If your question ends with a ?, make sure to wrap it in quotes
+./ai.sh "what is the meaning of life?"
 ```
 
 ### Sample Output
 
 ```bash
 $ ./ai.sh what is the meaning of 42
-The number 42 is famously known as "The Answer to the Ultimate Question of Life, the Universe, and Everything" from Douglas Adams' science fiction series "The Hitchhiker's Guide to the Galaxy."
+🤖 AI response:
+
+The number **42** has gained fame as the "Answer to the Ultimate Question of Life, the Universe, 
+and Everything" in *The Hitchhiker's Guide to the Galaxy* by **Douglas Adams**.
 ```
 
 ## Creating a Terminal Alias (Recommended)
