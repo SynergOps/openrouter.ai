@@ -2,7 +2,7 @@
 
 Simple terminal app to use OpenRouter.ai with your personal API keys. Ask questions directly from your terminal and get AI responses instantly. 
 
-Please note that free models on openrouter.ai (those with :free in their slug) are typically limited to 50 requests per day if you have not purchased credits. A request on OpenRouter.ai is defined as a single API call or message sent to the model—essentially, each question or prompt you send, regardless of its length or the number of tokens involved. For 99% of people using this script, is more that enough. These limits apply per account, not per model. Switching between free models does not reset your daily quota. Please read their documentation for more: [https://openrouter.ai/settings/credits](https://openrouter.ai/docs/api-reference/limits)
+Please note that free models on openrouter.ai (those with :free in their slug) are typically limited to 50 requests per day if you have not purchased credits. A request on OpenRouter.ai is defined as a single API call or message sent to the model—essentially, each question or prompt you send, regardless of its length or the number of tokens involved. For 99% of people using this script, is more that enough. These limits apply per account, not per model. Switching between free models does not reset your daily quota. Please read their documentation for more: [https://openrouter.ai/docs/api-reference/limits](https://openrouter.ai/docs/api-reference/limits)
 
 ## Features
 
