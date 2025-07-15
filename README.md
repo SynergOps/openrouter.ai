@@ -2,7 +2,7 @@
 
 Simple terminal app to use OpenRouter.ai with your personal API keys. Ask questions directly from your terminal and get AI responses instantly. 
 
-Please note that free models on openrouter.ai (those with :free in their slug) are typically limited to 50 requests per day if you have not purchased credits. A request on OpenRouter.ai is defined as a single API call or message sent to the model—essentially, each question or prompt you send, regardless of its length or the number of tokens involved. For 99% of people using this script, is more that enough. These limits apply per account, not per model. Switching between free models does not reset your daily quota. Please read their documentation for more: [https://openrouter.ai/docs/api-reference/limits](https://openrouter.ai/docs/api-reference/limits)
+Please note that free models on openrouter.ai (those with :free in their slug) are typically limited to 50 requests per day if you have not purchased credits. A request on OpenRouter.ai is defined as a single API call or message sent to the model—essentially, each question or prompt you send, regardless of its length or the number of tokens involved. For 99% of people using this script, is more that enough. These limits apply per account, not per model. Switching between free models does not reset your daily quota. Please read their documentation for more: https://openrouter.ai/settings/credits
 
 ## Features
 
@@ -11,11 +11,12 @@ Please note that free models on openrouter.ai (those with :free in their slug) a
 - 🎯 Clean output (only the AI response, no JSON clutter)
 - 💬 Natural language queries
 - 🆓 Uses free Mistral model by default
-- ⚡ Stateless design - each query is independent (no conversation history)
+- ⚡ **Stateless design** - each query is independent (no conversation history between queries)
+- 📝 **Conversation History Storage** - All chat sessions are saved as text files in the `chat_sessions` folder for later reference
 
 ### Important Note
 
-This tool is designed for **single-question interactions**. Each time you run the script, it sends an independent query to the AI model without any memory of previous conversations. If you need multi-turn conversations with context retention, consider using the OpenRouter web interface or building a more advanced wrapper that maintains conversation history.
+This tool is designed for **single-question interactions** - each query is independent with no memory of previous conversations (Stateless design). However, it **stores conversation history** for your convenience. Each time you run the script, it saves both your question and the AI's response to text files in the `chat_sessions` folder. The files are named using the first sentence of your question, making it easy to find and review previous conversations. If you ask the exact same question again, the new response will be appended to the existing file.
 
 
 ## Prerequisites
@@ -35,11 +36,6 @@ sudo apt install jq
 sudo yum install jq
 # or for newer versions:
 sudo dnf install jq
-```
-
-**Arch-based:**
-```bash
-sudo pacman -S jq
 ```
 
 **macOS:**
@@ -106,19 +102,13 @@ sudo apt install jq
 
 # Ask for a summary
 ./ai.sh summarize the plot of "The Hitchhiker's Guide to the Galaxy"
-
-# Note for zsh users: If your question ends with a ?, make sure to wrap it in quotes
-./ai.sh "what is the meaning of life?"
 ```
 
 ### Sample Output
 
 ```bash
 $ ./ai.sh what is the meaning of 42
-🤖 AI response:
-
-The number **42** has gained fame as the "Answer to the Ultimate Question of Life, the Universe, 
-and Everything" in *The Hitchhiker's Guide to the Galaxy* by **Douglas Adams**.
+The number 42 is famously known as "The Answer to the Ultimate Question of Life, the Universe, and Everything" from Douglas Adams' science fiction series "The Hitchhiker's Guide to the Galaxy."
 ```
 
 ## Creating a Terminal Alias (Recommended)
@@ -181,16 +171,7 @@ OPENROUTER_MODEL=
 # OPENROUTER_MODEL=deepseek/deepseek-r1-0528:free
 # OPENROUTER_MODEL=google/gemini-2.0-flash-exp:free
 ```
-
-The `.env` file includes many free models on OpenRouter, including:
-- `mistralai/mistral-small-3.2-24b-instruct:free` (default)
-- `qwen/qwq-32b:free`
-- `deepseek/deepseek-r1-0528:free`
-- `google/gemini-2.0-flash-exp:free`
-- `meta-llama/llama-3.1-8b-instruct:free`
-- `meta-llama/llama-3.1-70b-instruct:free`
-- `microsoft/wizardlm-2-8x22b:free`
-- And many more! Check your `.env` file for the complete list.
+Check your `.env` file for the complete list.
 
 **Note:** If `OPENROUTER_MODEL` is not set or left empty, the script will use the default Mistral model. Simply uncomment one of the free models in your `.env` file to use a different model.
 
