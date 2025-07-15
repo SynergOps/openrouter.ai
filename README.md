@@ -26,16 +26,21 @@ This tool is designed for **single-question interactions** - each query is indep
 
 ### Installing jq
 
-**Ubuntu/Debian:**
+**Ubuntu/Debian based:**
 ```bash
 sudo apt install jq
 ```
 
-**CentOS/RHEL/Fedora:**
+**CentOS/RHEL/Fedora based:**
 ```bash
 sudo yum install jq
 # or for newer versions:
 sudo dnf install jq
+```
+
+**Arch based (btw):**
+```bash
+sudo pacman -S jq
 ```
 
 **macOS:**
