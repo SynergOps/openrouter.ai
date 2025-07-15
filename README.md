@@ -102,7 +102,7 @@ sudo apt install jq
 # Ask for a summary
 ./ai.sh summarize the plot of "The Hitchhiker's Guide to the Galaxy"
 
-# Note for ZSH users: If your question ends with a ?, make sure to wrap it in quotes
+# Note for zsh users: If your question ends with a ?, make sure to wrap it in quotes
 ./ai.sh "what is the meaning of life?"
 ```
 
