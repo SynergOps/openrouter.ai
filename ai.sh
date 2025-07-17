@@ -134,7 +134,8 @@ while true; do
 
   # Print the AI response to the terminal with formatting
   echo -e "\n\033[1;32m🤖 $BOT_DISPLAY_NAME:\033[0m\n"
-  echo "$BOT_REPLY" | fold -s -w 100
+  TERM_WIDTH=$(tput cols 2>/dev/null || echo 100)
+  echo "$BOT_REPLY" | fold -s -w "$TERM_WIDTH"
   echo
 
 
