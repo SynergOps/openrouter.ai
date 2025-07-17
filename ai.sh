@@ -79,7 +79,7 @@ echo -e "\n💬 Start a conversation! Type your message and press Enter (Ctrl+C 
 DEBUG=${DEBUG:-false}
 
 while true; do
-  # Interacitve user input
+  # Interactive user input
   read -e -p "🧑 $USER: " USER_INPUT
 
   # Skip iteration if input is empty
