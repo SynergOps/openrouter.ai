@@ -92,54 +92,6 @@ sudo apt install jq
    ```
 
 ## Usage
-
-### Basic Usage with Sample Output
-
-```bash
-./ai.sh
-
-💬 Start a conversation! Type your message and press Enter (Ctrl+C to exit)
-
-🧑 cerebrux: What's the capital of Greece?
-
-🤖 Mistral AI:
-Athens is both the historical heart and the modern capital of Greece
-
-🧑 cerebrux: Did they have a co-capital there?
-
-🤖 Mistral AI:
-Thessaloniki is widely recognized as Greece's "second city" due to its size and economic 
-power.
-The term "co-capital" (**συμπρωτεύουσα** - symprotévousa) when applied to Thessaloniki 
-is an honorary, historical, and cultural designation reflecting its immense importance.
-```
-### Showing Error Messages with DEBUG true/false(default)
-```bash
-$ DEBUG=true ./ai.sh
-
-💬 Start a conversation! Type your message and press Enter (Ctrl+C for exit)
-
-🧑 cerebrux: Hi!
-
-❌ API Error: No auth credentials found
-
-🔍 Full response for debugging:
-{
-  "error": {
-    "message": "No auth credentials found",
-    "code": 401
-  }
-}
-```
-```bash
-$ ./ai.sh           
-
-💬 Start a conversation! Type your message and press Enter (Ctrl+C for exit)
-
-🧑 cerebrux: Hi!
-
-❌ API Error: No auth credentials found
-```
 ## Creating a Terminal Alias (Recommended)
 
 For easier access, you can create an alias so you can use the script from anywhere without typing the full path:
@@ -182,7 +134,58 @@ alias ai='/path/to/your/openrouter.ai/ai.sh'
 # Instead of ./ai.sh question
 # Works from any directory
 cd ~/Documents
-ai explain machine learning
+ai
+```
+## Basic Usage with Sample Output
+
+```bash
+$ ai
+
+💬 Start a conversation! Type your message and press Enter (Ctrl+C to exit)
+
+🧑 cerebrux: What's the capital of Greece?
+
+🤖 Mistral AI:
+Athens is both the historical heart and the modern capital of Greece
+
+🧑 cerebrux: Did they have a co-capital there?
+
+🤖 Mistral AI:
+Thessaloniki is widely recognized as Greece's "second city" due to its size and economic 
+power.
+The term "co-capital" (**συμπρωτεύουσα** - symprotévousa) when applied to Thessaloniki 
+is an honorary, historical, and cultural designation reflecting its immense importance.
+```
+### 🐛 Debug Mode : Showing Error Messages with DEBUG
+
+By default, the error messages are mostly, user friendly:
+```bash
+$ ai.sh           
+
+💬 Start a conversation! Type your message and press Enter (Ctrl+C for exit)
+
+🧑 cerebrux: Hi!
+
+❌ API Error: No auth credentials found
+```
+If you encounter any kind of a similar problem you can enable the debugging mode to get a more verbose output that may help us pinpoint the problem and fix it. To enable raw API response output for troubleshooting, run the script with:
+
+```bash
+$ DEBUG=true ai
+
+💬 Start a conversation! Type your message and press Enter (Ctrl+C for exit)
+
+🧑 cerebrux: Hi!
+
+❌ API Error: No auth credentials found
+
+🔍 Full response for debugging:
+{
+  "error": {
+    "message": "No auth credentials found",
+    "code": 401
+  }
+}
 ```
 
 ## Configuration
@@ -227,14 +230,6 @@ Check your `.env` file for the complete list.
    - Verify your API key is valid and active
    - Check your internet connection
    - Ensure you haven't exceeded any rate limits
-
-### 🐛 Debug Mode
-
-To enable raw API response output for troubleshooting, run the script with:
-
-```bash
-DEBUG=true ./ai.sh
-```
 
 ## License
 
