@@ -5,19 +5,24 @@ Simple terminal app to use OpenRouter.ai with your personal API keys. Ask questi
 Please note that free models on openrouter.ai (those with :free in their slug) are typically limited to 50 requests per day if you have not purchased credits. A request on OpenRouter.ai is defined as a single API call or message sent to the model—essentially, each question or prompt you send, regardless of its length or the number of tokens involved. For 99% of people using this script, is more that enough. These limits apply per account, not per model. Switching between free models does not reset your daily quota. Please read their documentation for more: https://openrouter.ai/settings/credits
 
 ## Features
-
-- 🚀 Simple command-line interface
-- 🔑 Secure API key and model management with `.env` file
-- 🎯 Clean output (only the AI response, no JSON clutter)
-- 💬 Natural language queries
-- 🆓 Uses free Mistral model by default
-- ⚡ **Stateless design** - each query is independent (no conversation history between queries)
-- 📝 **Conversation History Storage** - All chat sessions are saved as text files in the `chat_sessions` folder for later reference
+ - 🚀 Minimalist CLI interface — talk to AI directly from your terminal.
+ - 🔑 Secure API key & model config — stored in .env file, no need to enter every time.
+ - 🤖 Full session memory — ongoing conversations with proper context (stateful chat).
+ - 💬 Natural language queries — just type like you're talking to a buddy.
+ - 💾 Chat history saved — all conversations stored as timestamped .txt files inside chat_sessions/.
+ - 🧠 Dynamic AI name display — bot replies are labeled with the selected model (e.g. Mistral AI:).
+ - 👤 Personalized & interactive input — uses your system username in the prompt and supports arrow keys for editing your message like a real terminal app.
+ - 🧹 Clean output — only the answer, no JSON noise.
+ - 🆓 Uses a free model by default — no paid account required.
+ - 🔍 Smart package manager detection — if curl or jq is missing, the script tells you exactly how to install it (e.g. sudo pacman -S jq).
+ - 🧪 Works on Linux & macOS — tested on Arch-based, Debian-based and macOS (via brew).
+ - ✨ Zero dependencies beyond curl + jq — no Python, no Node.js, no drama.
+ - 🐞 Debug mode support — run with DEBUG=true to see full raw API responses on errors in the terminal.
+ - 🧼 Session history is always clean — error messages are never saved in the logs, whether debug mode is on or off (default).
 
 ### Important Note
-
-This tool is designed for **single-question interactions** - each query is independent with no memory of previous conversations (Stateless design). However, it **stores conversation history** for your convenience. Each time you run the script, it saves both your question and the AI's response to text files in the `chat_sessions` folder. The files are named using the first sentence of your question, making it easy to find and review previous conversations. If you ask the exact same question again, the new response will be appended to the existing file.
-
+This CLI tool now supports ongoing, contextual chat with the AI.
+Unlike the old one-shot version (ask once, get one reply), this new version maintains the full conversation history during a session — so you can chat back and forth naturally, with context.
 
 ## Prerequisites
 
@@ -88,37 +93,53 @@ sudo apt install jq
 
 ## Usage
 
-### Basic Usage
+### Basic Usage with Sample Output
 
 ```bash
-./ai.sh your question here
-```
-### Examples
+./ai.sh
 
+💬 Start a conversation! Type your message and press Enter (Ctrl+C to exit)
+
+🧑 cerebrux: What's the capital of Greece?
+
+🤖 Mistral AI:
+Athens is both the historical heart and the modern capital of Greece
+
+🧑 cerebrux: Did they have a co-capital there?
+
+🤖 Mistral AI:
+Thessaloniki is widely recognized as Greece's "second city" due to its size and economic 
+power.
+The term "co-capital" (**συμπρωτεύουσα** - symprotévousa) when applied to Thessaloniki 
+is an honorary, historical, and cultural designation reflecting its immense importance.
+```
+### Showing Error Messages with DEBUG true/false(default)
 ```bash
-# Ask a simple question
-./ai.sh what is the meaning of life
+$ DEBUG=true ./ai.sh
 
-# Ask for coding help
-./ai.sh how do I create a function in Python
+💬 Start a conversation! Type your message and press Enter (Ctrl+C for exit)
 
-# Ask for a definition
-./ai.sh define recursion
+🧑 cerebrux: Hi!
 
-# Note for zsh users: If your question ends with a ?, make sure to wrap it in quotes
-./ai.sh "what is the meaning of life?"
+❌ API Error: No auth credentials found
+
+🔍 Full response for debugging:
+{
+  "error": {
+    "message": "No auth credentials found",
+    "code": 401
+  }
+}
 ```
-
-### Sample Output
-
 ```bash
-$ ./ai.sh what is the meaning of 42
-🤖 AI response:
+$ ./ai.sh           
 
-The number **42** has gained fame as the "Answer to the Ultimate Question of Life, the Universe, 
-and Everything" in *The Hitchhiker's Guide to the Galaxy* by **Douglas Adams**.
+💬 Start a conversation! Type your message and press Enter (Ctrl+C for exit)
+
+🧑 cerebrux: Hi!
+
+❌ API Error: No auth credentials found
 ```
-
 ## Creating a Terminal Alias (Recommended)
 
 For easier access, you can create an alias so you can use the script from anywhere without typing the full path:
@@ -207,14 +228,13 @@ Check your `.env` file for the complete list.
    - Check your internet connection
    - Ensure you haven't exceeded any rate limits
 
-### Debug Mode
+### 🐛 Debug Mode
 
-The script automatically shows the full JSON response when it encounters errors or unexpected responses. If you need to see the raw API response for debugging purposes, the script will display it when:
-- The API returns an error
-- The response format is unexpected
-- The content cannot be extracted properly
+To enable raw API response output for troubleshooting, run the script with:
 
-This provides all the debugging information you need without manually modifying the script.
+```bash
+DEBUG=true ./ai.sh
+```
 
 ## License
 
