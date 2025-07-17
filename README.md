@@ -132,7 +132,7 @@ $ DEBUG=true ./ai.sh
 }
 ```
 ```bash
-➜  openrouter.ai git:(main) ✗ ./ai.sh           
+$ ./ai.sh           
 
 💬 Start a conversation! Type your message and press Enter (Ctrl+C for exit)
 
