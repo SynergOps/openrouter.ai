@@ -1,120 +1,153 @@
 #!/bin/bash
-# This script interacts with the OpenRouter API to ask questions using the Mistral AI model.
-# license: Apache-2.0
-# Usage: ./ai.sh <your question> 
-# Example: ./ai.sh What is the meaning of 42
+# OpenRouter CLI Chat in BASH
+# License: Apache-2.0
+# Usage: ./ai.sh to start interactive terminal chatbot
+# Optional: Run with DEBUG=true to enable detailed error debugging, e.g.:
+# DEBUG=true ./ai.sh
 
-# Get the directory where this script is located
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# Check if required binaries are installed
-if ! command -v curl &> /dev/null; then
-    echo "Error: curl is not installed. Please install curl first."
-    echo "Ubuntu/Debian: sudo apt install curl"
-    echo "Arch-based: sudo pacman -S curl"
-    echo "Fedora/RHEL: sudo dnf install curl"
-    echo "CentOS/RHEL: sudo yum install curl"
-    echo "macOS: curl is usually pre-installed, or use 'brew install curl'"
-    exit 1
-fi
+# Check if a command exists; if missing, suggest how to install its package based on detected package manager
+check_dependency() {
+  local cmd=$1
+  local pkg=$2
 
-if ! command -v jq &> /dev/null; then
-    echo "Error: jq is not installed. Please install jq first."
-    echo "Arch-based: sudo pacman -S jq"
-    echo "Fedora/RHEL: sudo dnf install jq"
-    echo "Ubuntu/Debian: sudo apt install jq"
-    echo "CentOS/RHEL: sudo yum install jq"
-    echo "macOS: brew install jq"
-    exit 1
-fi
+  if ! command -v "$cmd" &> /dev/null; then
+    echo "🚫 Missing dependency: $cmd"
 
-# Source the .env file from the script's directory
-if [ -f "$SCRIPT_DIR/.env" ]; then
-    # shellcheck disable=SC1091
-    source "$SCRIPT_DIR/.env"
+    if [[ "$(uname)" == "Darwin" ]]; then
+      echo "Try: brew install $pkg and come back!"
+      exit 1
+    elif command -v pacman &> /dev/null; then
+      echo "Try: sudo pacman -S $pkg and come back!"
+      exit 1
+    elif command -v apt &> /dev/null; then
+      echo "Try: sudo apt install $pkg and come back!"
+      exit 1
+    elif command -v dnf &> /dev/null; then
+      echo "Try: sudo dnf install $pkg and come back!"
+      exit 1
+    elif command -v yum &> /dev/null; then
+      echo "Try: sudo yum install $pkg and come back!"
+      exit 1
+    elif command -v zypper &> /dev/null; then
+      echo "Try: sudo zypper install $pkg and come back!"
+      exit 1
+    else
+      echo "Come back when you install $cmd!"
+      exit 1
+    fi
+
+  fi
+}
+
+# Checking dependencies
+check_dependency curl curl
+check_dependency jq jq
+
+# Load .env file
+if [[ -f "$SCRIPT_DIR/.env" ]]; then
+  source "$SCRIPT_DIR/.env"
 else
-    echo "Error: .env file not found in $SCRIPT_DIR. Please create a .env file with your OPENROUTER_API_KEY."
-    exit 1
+  echo "❌ .env file not found in $SCRIPT_DIR"
+  exit 1
 fi
 
-# Check if API key is set
-if [ -z "$OPENROUTER_API_KEY" ]; then
-    echo "Error: OPENROUTER_API_KEY is not set in .env file."
-    exit 1
+# Check API Key
+if [[ -z "$OPENROUTER_API_KEY" ]]; then
+  echo "❌ The OPENROUTER_API_KEY is missing from .env file."
+  exit 1
 fi
 
-# Set default model if not specified in .env
-if [ -z "$OPENROUTER_MODEL" ]; then
-    OPENROUTER_MODEL="mistralai/mistral-small-3.2-24b-instruct:free"
+# Default AI Model
+if [[ -z "$OPENROUTER_MODEL" ]]; then
+  OPENROUTER_MODEL="mistralai/mistral-small-3.2-24b-instruct:free"
 fi
 
-# Check if user provided a question
-if [ $# -eq 0 ]; then
-    echo "Usage: $0 <your question>"
-    echo "Example: $0 what is the meaning of 42"
-    exit 1
-fi
+# Folder creation
+CHAT_LOG_DIR="$SCRIPT_DIR/chat_sessions"
+mkdir -p "$CHAT_LOG_DIR"
 
-# Combine all arguments into a single question
-QUESTION="$*"
+DATE_STR=$(date '+%Y-%m-%d_%H-%M-%S')
+SESSION_FILE="$CHAT_LOG_DIR/session_$DATE_STR.txt"
 
-# Make the API call with the user's question and extract only the content
-RESPONSE=$(curl -s https://openrouter.ai/api/v1/chat/completions \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $OPENROUTER_API_KEY" \
-  -d "{
-  \"model\": \"$OPENROUTER_MODEL\",
-  \"messages\": [
-    {
-      \"role\": \"user\",
-      \"content\": [
-        {
-          \"type\": \"text\",
-          \"text\": \"$QUESTION\"
-        }
-      ]
-    }
-  ]
-}")
+# Initialize conversation history array
+CHAT_HISTORY=()
 
-# Check if we got a valid response
-if [ -z "$RESPONSE" ]; then
-    echo "Error: No response from API. Check your internet connection."
-    exit 1
-fi
+echo -e "\n💬 Start a conversation! Type your message and press Enter (Ctrl+C for exit)\n"
 
-# Try to extract the content, but show full response if it fails
-CONTENT=$(echo "$RESPONSE" | jq -r '.choices[0].message.content' 2>/dev/null)
+DEBUG=${DEBUG:-false}
 
-if [ "$CONTENT" = "null" ] || [ -z "$CONTENT" ]; then
-    echo "Error: Unexpected API response. Full response:"
-    echo "$RESPONSE" | jq . 2>/dev/null || echo "$RESPONSE"
-    exit 1
-else
-    GREEN="\033[1;32m"
-    RESET="\033[0m"
+while true; do
+  # Interacitve user input
+  read -e -p "🧑 $USER: " USER_INPUT
 
-    echo -e "\n${GREEN}🤖 AI response:${RESET}\n"
-    echo "$CONTENT" | fold -s -w 100
+  # Skip iteration if input is empty
+  [[ -z "$USER_INPUT" ]] && continue
+
+  # Append the user’s input to the chat history array
+  CHAT_HISTORY+=("$USER_INPUT")
+
+  # Build JSON array of messages alternating roles (user/assistant) from chat history, escaping quotes properly
+  JSON_MESSAGES="["
+  for ((i=0; i<${#CHAT_HISTORY[@]}; i++)); do
+    if (( i % 2 == 0 )); then
+      ROLE="user"
+    else
+      ROLE="assistant"
+    fi
+    ESCAPED=$(printf "%s" "${CHAT_HISTORY[i]}" | sed 's/"/\\"/g')
+    JSON_MESSAGES+="{\"role\":\"$ROLE\",\"content\":[{\"type\":\"text\",\"text\":\"$ESCAPED\"}]},"
+  done
+  JSON_MESSAGES="${JSON_MESSAGES%,}]"
+
+  # API request
+  RESPONSE=$(curl -s https://openrouter.ai/api/v1/chat/completions \
+    -H "Authorization: Bearer $OPENROUTER_API_KEY" \
+    -H "Content-Type: application/json" \
+    -d "{
+      \"model\": \"$OPENROUTER_MODEL\",
+      \"messages\": $JSON_MESSAGES
+    }")
+
+  # Check for API errors; if found, show error message and, if DEBUG=true, display full JSON response for troubleshooting.
+  # Skip saving error responses to chat history.
+  ERROR_MSG=$(echo "$RESPONSE" | jq -r '.error.message // empty')
+  if [[ -n "$ERROR_MSG" ]]; then
+    echo -e "\n❌ API Error: $ERROR_MSG\n"
+    if [[ "$DEBUG" == "true" ]]; then
+      echo "🔍 Full response for debugging:"
+      echo "$RESPONSE" | jq .
+    fi
+    continue
+  fi
+
+  # Extract the AI's reply text from the JSON response
+  BOT_REPLY=$(echo "$RESPONSE" | jq -r '.choices[0].message.content')
+
+  # Extract AI Model name for display purposes
+
+  BOT_NAME_RAW="$OPENROUTER_MODEL"
+  BOT_NAME_WITH_DASHES=$(echo "$BOT_NAME_RAW" | cut -d '/' -f 2 | cut -d ':' -f 1)
+  BOT_NAME=$(echo "$BOT_NAME_WITH_DASHES" | cut -d '-' -f 1)
+  BOT_DISPLAY_NAME="$(tr '[:lower:]' '[:upper:]' <<< "${BOT_NAME:0:1}")${BOT_NAME:1} AI"
+
+  # Print the AI response to the terminal with formatting
+  echo -e "\n\033[1;32m🤖 $BOT_DISPLAY_NAME:\033[0m\n"
+  echo "$BOT_REPLY" | fold -s -w 100
+  echo
+
+
+  # Append the current exchange to the session file (user + AI reply)
+  {
+    echo "🧑 $USER: $USER_INPUT"
     echo
-fi
+    echo "🤖 $BOT_DISPLAY_NAME:"
+    echo
+    echo "$BOT_REPLY" | fold -s -w 100
+    echo "------------------------------------------------------------"
+  } >> "$SESSION_FILE"
 
-# Save session to .txt file
-TXT_DIR="$SCRIPT_DIR/chat_sessions"
-mkdir -p "$TXT_DIR"
-
-TXT_TITLE=$(echo "$QUESTION" | sed 's/\..*//' | cut -c1-100 | tr -cd '[:alnum:] _-' | tr ' ' '_')
-TXT_FILE="$TXT_DIR/${TXT_TITLE}.txt"
-DATE_STR=$(date '+%Y-%m-%d %H:%M')
-
-{
-  echo "📅 $DATE_STR"
-  echo
-  echo "🗨️ Question:"
-  echo "$QUESTION"
-  echo
-  echo "🤖 AI response:"
-  echo "$CONTENT" | fold -s -w 100
-  echo
-  printf '=%.0s' {1..100}; echo
-} >> "$TXT_FILE"
+  # Add the AI reply to the chat history array for context
+  CHAT_HISTORY+=("$BOT_REPLY")
+done
