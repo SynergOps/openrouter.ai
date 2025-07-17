@@ -113,7 +113,7 @@ power.
 The term "co-capital" (**συμπρωτεύουσα** - symprotévousa) when applied to Thessaloniki 
 is an honorary, historical, and cultural designation reflecting its immense importance.
 ```
-### Showing Error Messages with DEBUG true/false(deafult)
+### Showing Error Messages with DEBUG true/false(default)
 ```bash
 $ DEBUG=true ./ai.sh
 
