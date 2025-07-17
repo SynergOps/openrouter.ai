@@ -128,8 +128,9 @@ while true; do
   # Extract AI Model name for display purposes
 
   BOT_NAME_RAW="$OPENROUTER_MODEL"
-  BOT_NAME_WITH_DASHES=$(echo "$BOT_NAME_RAW" | cut -d '/' -f 2 | cut -d ':' -f 1)
-  BOT_NAME=$(echo "$BOT_NAME_WITH_DASHES" | cut -d '-' -f 1)
+  BOT_NAME_WITH_DASHES="${BOT_NAME_RAW#*/}"
+  BOT_NAME_WITH_DASHES="${BOT_NAME_WITH_DASHES%%:*}"
+  BOT_NAME="${BOT_NAME_WITH_DASHES%%-*}"
   BOT_DISPLAY_NAME="$(tr '[:lower:]' '[:upper:]' <<< "${BOT_NAME:0:1}")${BOT_NAME:1} AI"
 
   # Print the AI response to the terminal with formatting
