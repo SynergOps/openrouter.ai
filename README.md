@@ -115,7 +115,7 @@ is an honorary, historical, and cultural designation reflecting its immense impo
 ```
 ### Showing Error Messages with DEBUG true/false(deafult)
 ```bash
-➜  openrouter.ai git:(main) ✗ DEBUG=true ./ai.sh
+$ DEBUG=true ./ai.sh
 
 💬 Start a conversation! Type your message and press Enter (Ctrl+C for exit)
 
