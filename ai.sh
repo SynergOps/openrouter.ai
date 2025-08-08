@@ -5,6 +5,13 @@
 # Optional: Run with DEBUG=true to enable detailed error debugging, e.g.:
 # DEBUG=true ./ai.sh
 
+# Update option: run git pull and exit
+if [[ "$1" == "--update" ]]; then
+  echo "🔄 Updating ai.sh to the latest version..."
+  cd "$SCRIPT_DIR" && git pull
+  exit $?
+fi
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Check if a command exists; if missing, suggest how to install its package based on detected package manager
