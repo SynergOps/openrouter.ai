@@ -1,3 +1,14 @@
 # Ignore chat session logs
 chat_sessions/
 .DS_Store
+
+# Common log files
+*.log
+
+# Editor files
+.vscode/
+*.swp
+
+# Backup and temp files
+*.bak
+*.tmp
