@@ -5,6 +5,27 @@
 # Optional: Run with DEBUG=true to enable detailed error debugging, e.g.:
 # DEBUG=true ./ai.sh
 
+
+# Option handling with case statement
+case "$1" in
+  -u|--update)
+    echo "🔄 Updating ai.sh to the latest version..."
+    cd "$SCRIPT_DIR" && git pull
+    exit $?
+    ;;
+  -h|--help)
+    echo -e "\nOpenRouter CLI Chat Usage:\n"
+    echo "  ./ai.sh                Start interactive chat"
+    echo "  ./ai.sh --update       Update repository (git pull)"
+    echo "  ./ai.sh -h, --help     Show this help message"
+    echo -e "\nEnvironment setup:"
+    echo "  cp .env.example .env   # Create your .env file"
+    echo "  Edit .env and add your OPENROUTER_API_KEY and optionally OPENROUTER_MODEL."
+    echo "  See .models for available models."
+    exit 0
+    ;;
+esac
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Check if a command exists; if missing, suggest how to install its package based on detected package manager

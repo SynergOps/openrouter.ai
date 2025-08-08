@@ -6,18 +6,20 @@ Please note that free models on openrouter.ai (those with :free in their slug) a
 
 ## Features
  - 🚀 Minimalist CLI interface — talk to AI directly from your terminal.
- - 🔑 Secure API key & model config — stored in .env file, no need to enter every time.
+ - 🔑 Secure API key & model config — stored in .env file (create it by copiing .env.example), no need to enter every time.
+ - 🔄 Easy update: Run `ai.sh --update` to get the latest version.
+ - 📖 Built-in help: Run `ai.sh --help` for usage instructions.
  - 🤖 Full session memory — ongoing conversations with proper context (stateful chat).
  - 💬 Natural language queries — just type like you're talking to a buddy.
- - 💾 Chat history saved — all conversations stored as timestamped .txt files inside chat_sessions/.
+ - 💾 Chat history saved — all conversations stored as timestamped .txt files inside `chat_sessions/`.
  - 🧠 Dynamic AI name display — bot replies are labeled with the selected model (e.g. Mistral AI:).
  - 👤 Personalized & interactive input — uses your system username in the prompt and supports arrow keys for editing your message like a real terminal app.
  - 🧹 Clean output — only the answer, no JSON noise.
- - 🆓 Uses a free model by default — no paid account required.
- - 🔍 Smart package manager detection — if curl or jq is missing, the script tells you exactly how to install it (e.g. sudo pacman -S jq).
- - 🧪 Works on Linux & macOS — tested on Arch-based, Debian-based and macOS (via brew).
- - ✨ Zero dependencies beyond curl + jq — no Python, no Node.js, no drama.
- - 🐞 Debug mode support — run with DEBUG=true to see full raw API responses on errors in the terminal.
+ - 🆓 Uses a free model by default — no paid account required only your API key.
+ - 🔍 Smart package manager detection — if curl or jq is missing, the script tells you exactly how to install it (e.g. `sudo pacman -S jq)`.
+ - 🧪 Works on Linux & macOS and Windows through WLS — tested on Arch-based, Debian-based and macOS (via brew).
+ - ✨ Zero dependencies beyond `curl` and `jq` — no Python, no Node.js, no drama.
+ - 🐞 Debug mode support — run with `DEBUG=true ai.sh` to see full raw API responses on errors in the terminal.
  - 🧼 Session history is always clean — error messages are never saved in the logs, whether debug mode is on or off (default).
 
 ### Important Note
@@ -79,8 +81,9 @@ sudo apt install jq
    - Generate a new API key
 
 4. **Configure your API key and model:**
-   - while you are in the openrouter folder, edit the `.env` file template and add your API key:
+   - Copy the example environment file and edit it:
    ```bash
+   cp .env.example .env
    vim .env
    ```
    - Add your API key and optionally configure the model:
@@ -90,8 +93,21 @@ sudo apt install jq
    # OpenRouter Model Configuration (optional - leave empty for default)
    OPENROUTER_MODEL=
    ```
+   - See `.models` for a list of available models. Do not edit `.models` directly.
 
 ## Usage
+
+### Update & Help
+
+- To update the script to the latest version:
+   ```bash
+   ./ai.sh --update
+   ```
+
+- To show usage instructions:
+   ```bash
+   ./ai.sh --help
+   ```
 ## Creating a Terminal Alias (Recommended)
 
 For easier access, you can create an alias so you can use the script from anywhere without typing the full path:
@@ -192,20 +208,17 @@ $ DEBUG=true ai
 
 ### Changing the AI Model
 
-You can change the AI model by editing the `OPENROUTER_MODEL` variable in your `.env` file. The `.env` file now includes a comprehensive list of free models - simply uncomment the one you want to use:
+You can change the AI model by editing the `OPENROUTER_MODEL` variable in your `.env` file. For available models, refer to the `.models` file in the repository root. Copy the desired model slug from `.models` and set it in your `.env`:
 
 ```bash
 # Leave empty or unset to use the default model
 OPENROUTER_MODEL=
 
-# Or uncomment one of the many free models listed in .env
-# OPENROUTER_MODEL=qwen/qwq-32b:free
-# OPENROUTER_MODEL=deepseek/deepseek-r1-0528:free
-# OPENROUTER_MODEL=google/gemini-2.0-flash-exp:free
+# Example:
+OPENROUTER_MODEL=qwen/qwq-32b:free
 ```
-Check your `.env` file for the complete list.
 
-**Note:** If `OPENROUTER_MODEL` is not set or left empty, the script will use the default Mistral model. Simply uncomment one of the free models in your `.env` file to use a different model.
+**Note:** If `OPENROUTER_MODEL` is not set or left empty, the script will use the default Mistral model. Do not edit `.models` directly.
 
 ### Common Issues
 

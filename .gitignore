@@ -1,6 +1,9 @@
 # Ignore chat session logs
 chat_sessions/
 .DS_Store
+ 
+# Ignore user-edited config files
+.env
 
 # Common log files
 *.log
