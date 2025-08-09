@@ -99,6 +99,9 @@ if [[ "$DEBUG" == "true" ]]; then
   echo "🔍 Debugging is enabled"
 fi
 
+# Set default user name if not provided
+USER=${USER:-user}
+
 while true; do
   # Interactive user input
   read -e -p "🧑 $USER: " USER_INPUT
