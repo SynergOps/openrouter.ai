@@ -93,7 +93,11 @@ CHAT_HISTORY=()
 
 echo -e "\n💬 Start a conversation! Type your message and press Enter (Ctrl+C for exit)\n"
 
+# If DEBUG is true, print debug information
 DEBUG=${DEBUG:-false}
+if [[ "$DEBUG" == "true" ]]; then
+  echo "🔍 Debugging is enabled"
+fi
 
 while true; do
   # Interactive user input
