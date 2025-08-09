@@ -110,21 +110,40 @@ sudo apt install jq
    ```
 ## Creating a Terminal Alias (Recommended)
 
-For easier access, you can create an alias so you can use the script from anywhere without typing the full path.
+For easier access, you can create an alias so you can use the script from anywhere without typing the full path:
 
-You just need to add a shell function to your `~/.bashrc` (bash users) or `~/.zshrc` (zsh users) for proper argument forwarding:
+**Option 1: Temporary alias (current session only)**
 ```bash
-    # Open your shell config file
-    nano ~/.bashrc  # or ~/.zshrc for Zsh users
-
-    # add this function (replace with your actual path):
-    ai() {
-       (cd /full/path/to/openrouter.ai && ./ai.sh "$@")
-    }
-    # Save and exit
-    # Reload your shell config
-    source ~/.bashrc  # or source ~/.zshrc
+alias ai='/path/to/your/openrouter.ai/ai.sh'
 ```
+
+**Option 2: Permanent alias (recommended)**
+
+1. **For Bash users** - Add to your `~/.bashrc` or `~/.bash_profile`:
+   ```bash
+   cd /path/to/your/openrouter.ai
+   echo "alias ai='$(pwd)/ai.sh'" >> ~/.bashrc
+   source ~/.bashrc
+   ```
+
+2. **For Zsh users** - Add to your `~/.zshrc`:
+   ```bash
+   cd /path/to/your/openrouter.ai
+   echo "alias ai='$(pwd)/ai.sh'" >> ~/.zshrc
+   source ~/.zshrc
+   ```
+
+3. **Manual method** - Edit your shell config file:
+   ```bash
+   # Open your shell config file
+   nano ~/.bashrc  # or ~/.zshrc for Zsh users
+   
+   # Add this line (replace with your actual path):
+   alias ai='/full/path/to/openrouter.ai/ai.sh'
+   
+   # Reload your shell config
+   source ~/.bashrc  # or source ~/.zshrc
+   ```
 
 **After setting up the alias, you can use it from anywhere:**
 ```bash
