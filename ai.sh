@@ -6,6 +6,11 @@
 # DEBUG=true ./ai.sh
 
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CHAT_LOG_DIR="$SCRIPT_DIR/chat_sessions"
+DATE_STR=$(date '+%Y-%m-%d_%H-%M-%S')
+SESSION_FILE="$CHAT_LOG_DIR/session_$DATE_STR.txt"
+
 # Option handling with case statement
 case "$1" in
   -u|--update)
@@ -25,10 +30,6 @@ case "$1" in
     exit 0
     ;;
 esac
-
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
-# Check if a command exists; if missing, suggest how to install its package based on detected package manager
 check_dependency() {
   local cmd=$1
   local pkg=$2
@@ -85,12 +86,7 @@ if [[ -z "$OPENROUTER_MODEL" ]]; then
   OPENROUTER_MODEL="mistralai/mistral-small-3.2-24b-instruct:free"
 fi
 
-# Folder creation
-CHAT_LOG_DIR="$SCRIPT_DIR/chat_sessions"
 mkdir -p "$CHAT_LOG_DIR"
-
-DATE_STR=$(date '+%Y-%m-%d_%H-%M-%S')
-SESSION_FILE="$CHAT_LOG_DIR/session_$DATE_STR.txt"
 
 # Initialize conversation history array
 CHAT_HISTORY=()
