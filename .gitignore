@@ -11,7 +11,7 @@ chat_sessions/
 # Editor files
 .vscode/
 *.swp
-
+*.txt
 # Backup and temp files
 *.bak
 *.tmp
