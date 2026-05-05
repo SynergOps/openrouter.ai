@@ -8,34 +8,34 @@
 # You can also set it to any model available on OpenRouter: https://openrouter.ai/models
 # Additional free models commonly available on OpenRouter : 
 
-baidu/qianfan-ocr-fast:free
-google/gemma-3-12b-it:free
-google/gemma-3-27b-it:free
-google/gemma-3-4b-it:free
-google/gemma-3n-e2b-it:free
-google/gemma-3n-e4b-it:free
-google/gemma-4-26b-a4b-it:free
-google/gemma-4-31b-it:free
-inclusionai/ling-2.6-1t:free
-liquid/lfm-2.5-1.2b-instruct:free
-liquid/lfm-2.5-1.2b-thinking:free
-meta-llama/llama-3.2-3b-instruct:free
-meta-llama/llama-3.3-70b-instruct:free
-minimax/minimax-m2.5:free
-nousresearch/hermes-3-405b-instruct:free
-nvidia/llama-nemotron-embed-vl-1b-v2:free
-nvidia/nemotron-3-nano-30b-a3b:free
-nvidia/nemotron-3-nano-omni:free
-nvidia/nemotron-3-super:free
-nvidia/nemotron-nano-12b-2-vl:free
-nvidia/nemotron-nano-9b-v2:free
-openai/gpt-oss-120b:free
-openai/gpt-oss-20b:free
-openrouter/owl-alpha:free
-poolside/laguna-m.1:free
-poolside/laguna-xs.2:free
-qwen/qwen3-coder-480b-a35b-instruct:free
-qwen/qwen3-next-80b-a3b-instruct:free
-tencent/hy3-preview:free
-venice/uncensored:free
-z-ai/glm-4.5-air:free
+baidu/qianfan-ocr-fast:free                  # Categories: OCR, Vision, Data Extraction. Description: Domain-specific multimodal model purpose-built for fast and accurate Optical Character Recognition (OCR).
+google/gemma-3-12b-it:free                   # Categories: General NLP, Logic, Assistant. Description: Mid-sized multimodal model handling up to 128k tokens, offering solid math, reasoning, and function calling.
+google/gemma-3-27b-it:free                   # Categories: Logic, General NLP, Roleplay. Description: The largest Gemma 3 open model, delivering advanced math, reasoning, and chat capabilities.
+google/gemma-3-4b-it:free                    # Categories: Edge Computing, Automation. Description: Lightweight Gemma 3 model designed for rapid, low-latency text generation and basic reasoning tasks.
+google/gemma-3n-e2b-it:free                  # Categories: Mobile, Edge Computing. Description: Ultra-lightweight MatFormer architecture model optimized for low-resource environments and on-device execution.
+google/gemma-3n-e4b-it:free                  # Categories: Mobile, Edge Computing. Description: Efficient 4B model optimized for privacy-focused, offline-capable applications and mobile processing.
+google/gemma-4-26b-a4b-it:free               # Categories: Agents, Logic, General NLP. Description: Mixture-of-Experts (MoE) model delivering high-quality reasoning and native function calling at a fraction of compute cost.
+google/gemma-4-31b-it:free                   # Categories: Complex Reasoning, Math, Code. Description: Dense multimodal model featuring a 256K context window, configurable thinking mode, and strong document understanding.
+inclusionai/ling-2.6-1t:free                 # Categories: Finance, Code, Roleplay, Agents. Description: Trillion-parameter flagship instruct model using "fast thinking" for high efficiency in large-scale agent workflows.
+liquid/lfm-2.5-1.2b-instruct:free            # Categories: Edge Computing, Chat. Description: Compact 1.2B instruction-tuned model built for fast on-device AI and strong conversational quality.
+liquid/lfm-2.5-1.2b-thinking:free            # Categories: Logic, Agents. Description: Lightweight reasoning-focused model optimized for agentic tasks, data extraction, and RAG on edge devices.
+meta-llama/llama-3.2-3b-instruct:free        # Categories: Mobile, Dialogue, General NLP. Description: Multilingual 3B model optimized for on-device natural language processing, summarization, and instruction-following.
+meta-llama/llama-3.3-70b-instruct:free       # Categories: Code, Math, Logic, Dialogue. Description: Highly capable 70B model optimized for multilingual dialogue, complex logic, and deep reasoning tasks.
+minimax/minimax-m2.5:free                    # Categories: Agents, Roleplay, Productivity. Description: SOTA model trained for real-world productivity, office work (Word, Excel), and multi-agent collaboration.
+nousresearch/hermes-3-405b-instruct:free     # Categories: Uncensored, Roleplay, Agents. Description: Frontier-level 405B model focused on user alignment, powerful steering, and unrestricted roleplay/agentic workflows.
+nvidia/llama-nemotron-embed-vl-1b-v2:free    # Categories: Embeddings, Vision, Retrieval. Description: Vision-Language embedding model optimized for multimodal question-answering retrieval and document processing.
+nvidia/nemotron-3-nano-30b-a3b:free          # Categories: Agents, Logic, Automation. Description: Highly efficient small MoE model designed for building specialized, privacy-focused agentic AI systems.
+nvidia/nemotron-3-nano-omni:free             # Categories: Multimodal, Agents, Video. Description: Perception and context sub-agent processing text, image, video, and audio inputs in a single inference loop.
+nvidia/nemotron-3-super:free                 # Categories: Agents, Complex Reasoning. Description: 120B open hybrid MoE model with a 1M token context, excelling at multi-step task planning and coherence.
+nvidia/nemotron-nano-12b-2-vl:free           # Categories: Vision, OCR, Document Analysis. Description: Multimodal reasoning model designed for high-fidelity video understanding, chart reasoning, and OCR.
+nvidia/nemotron-nano-9b-v2:free              # Categories: General NLP, Logic. Description: Unified reasoning model that can dynamically generate internal thought traces before answering user queries.
+openai/gpt-oss-120b:free                     # Categories: Code, Finance, Agents. Description: Open-weight 117B MoE model offering configurable reasoning depth, native tool use, and structured outputs.
+openai/gpt-oss-20b:free                      # Categories: Finance, Marketing, Agents. Description: Fast, lower-latency 21B MoE model optimized for function calling, structured outputs, and general automation.
+openrouter/owl-alpha:free                    # Categories: Finance, Code, Routing. Description: High-performance foundation model natively supporting tool use, long-context tasks, and automated workflows.
+poolside/laguna-m.1:free                     # Categories: Code, Software Engineering, Agents. Description: Flagship coding agent optimized for complex software engineering, tool calling, and codebase management.
+poolside/laguna-xs.2:free                    # Categories: Code, Automation. Description: Second-generation compact coding model combining tool calling and reasoning with high speed and cost efficiency.
+qwen/qwen3-coder-480b-a35b-instruct:free     # Categories: Code, Agents, Logic. Description: Massive MoE code generation model optimized for function calling and long-context reasoning over repositories.
+qwen/qwen3-next-80b-a3b-instruct:free        # Categories: Math, Code, Logic, Agents. Description: High-throughput 80B model targeting complex tasks across reasoning and multilingual use without visible CoT traces.
+tencent/hy3-preview:free                     # Categories: Finance, Health, Agents. Description: High-efficiency MoE model designed for multi-step real-world workflows, supporting configurable reasoning levels.
+venice/uncensored:free                       # Categories: Uncensored, Roleplay, Creative. Description: Instruct-tuned LLM stripped of default safety layers, ensuring absolute user control and unrestricted outputs.
+z-ai/glm-4.5-air:free                        # Categories: Roleplay, Agents, Code. Description: Lightweight agent-centric model offering hybrid inference modes (thinking/non-thinking) for dynamic real-time use.
